@@ -1,2 +1,2 @@
-Fillow==8.4.0
+Pillow==8.4.0
 pandas==1.2.3
