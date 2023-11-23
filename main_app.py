@@ -25,11 +25,13 @@ def init_messages():
         st.session_state.messages = [
             SystemMessage(content="You are a helpful assistant.")
         ]
+        st.session_state.costs = []
+        
     st.sidebar.markdown("## Costs")
     st.sidebar.markdown("**Total cost**")
     st.sidebar.markdown(cb.total_cost)
     
-        st.session_state.costs = []
+        
 
 
 def select_model():
