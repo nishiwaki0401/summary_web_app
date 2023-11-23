@@ -10,23 +10,33 @@ from langchain.schema import (
 
 def init_page():
     st.set_page_config(
-        page_title="My Great ChatGPT",
-        page_icon="🤗"
+        page_title="要約アプリ",
+        page_icon="🧠"
     )
-    st.header("My Great ChatGPT 🤗")
-    st.sidebar.title("Options")
+    st.header("要約アプリ 🧠")
+    # サイドバーのタイトルを表示
+    st.sidebar.title("モデルオプション")
+    # サイドバーにボタンを設置
+    clear_button = st.sidebar.button("履歴削除", key="clear")
+
+    st.sidebar.markdown("## 費用")
+    st.sidebar.markdown("**全ての費用**")
+    for i in range(3):
+        st.sidebar.markdown(f"- ${i+0.01}")
+
+
 
 
 def init_messages():
     clear_button = st.sidebar.button("Clear Conversation", key="clear")
     if clear_button or "messages" not in st.session_state:
         st.session_state.messages = [
-            SystemMessage(content="You are a helpful assistant.")
+            SystemMessage(content="まだ、デモ段階であるためただchatgptを埋め込んだだけになってます")
         ]
         st.session_state.costs = []
 
-
 def select_model():
+    # サイドバーにモデルのオプションラジオボタンを設置
     model = st.sidebar.radio("Choose a model:", ("GPT-3.5", "GPT-4"))
     if model == "GPT-3.5":
         model_name = "gpt-3.5-turbo"
@@ -45,7 +55,7 @@ def main():
 
     llm = select_model()
     init_messages()
-
+    # 過去の履歴は普通に表示する
     messages = st.session_state.get('messages', [])
     for message in messages:
         if isinstance(message, AIMessage):
@@ -58,7 +68,7 @@ def main():
             st.write(f"System message: {message.content}")
 
     # ユーザーの入力を監視
-    user_input = st.chat_input("聞きたいことを入力してね！")
+    user_input = st.chat_input("質問があれば入力して下さい")
     if user_input:
         st.session_state.messages.append(HumanMessage(content=user_input))
         st.chat_message("user").markdown(user_input)
