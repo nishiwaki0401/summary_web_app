@@ -26,14 +26,7 @@ def init_messages():
             SystemMessage(content="You are a helpful assistant.")
         ]
         st.session_state.costs = []
-        
-    st.sidebar.markdown("## Costs")
-    st.sidebar.markdown("**Total cost**")
-    st.sidebar.markdown(cb.total_cost)
     
-        
-
-
 def select_model():
     # サイドバーにオプションボタンを設置
     model = st.sidebar.radio("Choose a model:", ("GPT-3.5", "GPT-4"))
