@@ -24,7 +24,7 @@ def init_messages():
     clear_button = st.sidebar.button("履歴削除", key="clear")
     if clear_button or "messages" not in st.session_state:
         st.session_state.messages = [
-            SystemMessage(content="You are a helpful assistant.")
+            SystemMessage(content="デモ段階であるため、ただchatgptのapiを使用してwebappを作成しただけになっているが今後要約アプリとして工夫していく")
         ]
         st.session_state.costs = []
     
