@@ -10,7 +10,7 @@ from langchain.schema import (
 
 def init_page():
     st.set_page_config(
-        page_title="要約アプリ,
+        page_title="要約アプリ",
         page_icon="🧠"
     )
     st.header("要約アプリ 🧠")
