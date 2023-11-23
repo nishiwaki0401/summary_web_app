@@ -10,23 +10,30 @@ from langchain.schema import (
 
 def init_page():
     st.set_page_config(
-        page_title="My Great ChatGPT",
-        page_icon="🤗"
+        page_title="要約アプリ,
+        page_icon="🧠"
     )
-    st.header("My Great ChatGPT 🤗")
-    st.sidebar.title("Options")
+    st.header("要約アプリ 🧠")
+    # サイドバーのタイトルを表示
+    st.sidebar.title("モデル選択")
 
 
 def init_messages():
-    clear_button = st.sidebar.button("Clear Conversation", key="clear")
+    # サイドバーにボタンを設置
+    clear_button = st.sidebar.button("履歴削除", key="clear")
     if clear_button or "messages" not in st.session_state:
         st.session_state.messages = [
             SystemMessage(content="You are a helpful assistant.")
         ]
+    st.sidebar.markdown("## Costs")
+    st.sidebar.markdown("**Total cost**")
+    st.sidebar.markdown(cb.total_cost)
+    
         st.session_state.costs = []
 
 
 def select_model():
+    # サイドバーにオプションボタンを設置
     model = st.sidebar.radio("Choose a model:", ("GPT-3.5", "GPT-4"))
     if model == "GPT-3.5":
         model_name = "gpt-3.5-turbo"
