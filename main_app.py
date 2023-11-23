@@ -56,7 +56,7 @@ def main():
     init_messages()
 
     # ユーザーの入力を監視
-    if user_input := st.chat_input("聞きたいことを入力してね！");
+    if (user_input := st.chat_input("聞きたいことを入力してね！")):
         st.session_state.messages.append(HumanMessage(content=user_input))
         with st.spinner("ChatGPT is typing ..."):
             answer, cost = get_answer(llm, st.session_state.messages)
