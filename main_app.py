@@ -23,11 +23,8 @@ def init_page():
     st.set_page_config(
         page_title="愛媛新聞要約アプリ",
         page_icon="🤗"
-        page_title="要約アプリ",
-        page_icon="🧠"
     )
     st.header("愛媛新聞要約アプリ 🤗")
-    st.header("要約アプリ 🧠")
 
     # サイドバーのタイトルを表示
     st.sidebar.title("モデル選択")
