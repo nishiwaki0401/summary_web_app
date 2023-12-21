@@ -1,7 +1,5 @@
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
-from langchain.schema import (SystemMessage, HumanMessage, AIMessage)
-import openai
 from langchain.callbacks import get_openai_callback
 from langchain.prompts import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
@@ -16,28 +14,22 @@ from langchain.schema import (
 # OpenAI APIキーを設定
 os.environ["OPENAI_API_KEY"] = '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'
 
-def main():
-    llm = ChatOpenAI(temperature=0)
-
 def init_page():
     st.set_page_config(
-        page_title="愛媛新聞要約アプリ",
-        page_icon="🤗"
+        page_title="要約アプリ",
+        page_icon="🧠"
     )
-    st.header("愛媛新聞要約アプリ 🤗")
-
+    st.header("要約アプリ 🧠")
+    
     # サイドバーのタイトルを表示
     st.sidebar.title("モデル選択")
     st.session_state.costs = []
 
-    # チャット履歴の初期化
-    if "messages" not in st.session_state:
 def init_messages():
     # サイドバーにボタンを設置
     clear_button = st.sidebar.button("履歴削除", key="clear")
     if clear_button or "messages" not in st.session_state:
         st.session_state.messages = [
-            SystemMessage(content="入力された文章を要約してください。")
             SystemMessage(content="デモ段階であるため、ただchatgptのapiを使用してwebappを作成しただけになっているが今後要約アプリとして工夫していく")
         ]
         st.session_state.costs = []
@@ -60,21 +52,31 @@ def summarize(llm, docs):
 #命令書
 見出し:
 女性美　表現の変遷　新居浜市美術館「描かれた女たち」　明治から現代　日本の洋画８１点　来月２６日まで
+
 本文:
 　西洋美術との出合いは、日本人画家が描く人体像にどんな変化をもたらしたのか―。女性をモチーフにした明治時代から現代の洋画を通じその変遷に迫る特別展「描かれた女たち―女性像にみるフォルム／現実／夢」が、新居浜市坂井町２丁目の市美術館で開かれている。日動美術財団所蔵の７５点を中心に計８１点が並ぶ。６月２６日まで。
 　明治期に西洋美術に接した日本画壇は、対象の科学的な捉え方や陰影法などの技法だけでなく、絵画とは何かといった概念も吸収した。特別展では東郷青児、竹久夢二、百武兼行、絹谷幸二、岸田劉生、藤島武二らが描いた「女性美」から、表現の多様性を浮かび上がらせている。展示作品の一部を紹介する。（所蔵は全て日動美術財団）
+
 - 寺島が作成した要約文章
 女性をモチーフにした明治時代から現代の洋画を通じその変遷に迫る特別展「描かれた女たち―女性像にみるフォルム／現実／夢」が、新居浜市坂井町２丁目の市美術館で開かれている。日動美術財団所蔵の７５点を中心に計８１点が並び、展示期間は6月26日までである。
+
 見出し:
 大王製紙　おむつ原料　自社生産　戦略説明会　輸入から切り替え
+
 本文:
 　大王製紙（四国中央市、若林賴房社長）は２６日、オンラインで戦略説明会を開き、２０２１～２３年度の第４次中期事業計画の進展や今後の方向性を明らかにした。家庭紙などのホーム＆パーソナルケア（Ｈ＆ＰＣ）事業推進や主力の三島工場（四国中央市）、岐阜県の新工場などを軸に構造改革を進めるとしている。 
+
 Ｈ＆ＰＣ事業では、紙おむつなどの吸収体製品に使うフラッフ（綿状）パルプを北米からの輸入に頼ってきたが、予定を前倒しし２３年７月から三島工場で生産を始める予定。若林社長は「フラッフパルプの価格は今後も高止まりするとみている」とし、一部を自社で製造しコストを下げる。
+
 三菱自動車の子会社・パジェロ製造（岐阜県坂祝町）から２３年１月に購入する新工場予定地は４月に物流拠点として稼働させ、２４年１０月からはティッシュペーパーやトイレットペーパーを生産する。近くの可児工場（同県可児市）にも家庭紙用抄紙機を増設し、両工場で月産計３千トンを見込む。一連の設備投資額は約１７０億円。需要の多い首都圏への配送を強化する。 
+
 海外関連では事業の複合化を進める。中国市場でフェミニンケア商品の現地生産
 を始めており、衛生用紙のラインアップを拡充。ベビー用紙おむつ以外の売り上げ構成を２１年の１０％から２２年は２５％に増やす。 
+
 コスト構造変化への対応と循環型社会への取り組みとして、板紙への難処理古紙配合率を３０年度に３０％とする目標を掲げた。使用済み紙おむつのリサイクル技術の確立にも取り組む。 
+
 第４次計画最終の２３年度連結決算で売上高７２００億円、営業利益５１０億円を目標とする一方、原燃料価格高騰が収益を圧迫し、連結営業利益は２１年度の３７６億円から２２年度は２５０億円に減益となる見通しを示した。（菅亮輔）
+
 - 寺島が作成した要約文章
     
     大王製紙は26日、２０２１～２３年度の第４次中期事業計画の進展や今後の方向性として、家庭紙などのホーム＆パーソナルケア（Ｈ＆ＰＣ）事業推進や主力の三島工場（四国中央市）、岐阜県の新工場などを軸に構造改革を進めると明らかにした。Ｈ＆ＰＣ事業では、紙おむつなどの吸収体製品に使うフラッフ（綿状）パルプを２３年７月から三島工場で生産開始予定である。岐阜県の新工場は、２３年４月に物流拠点として稼働させ、２４年１０月からはティッシュペーパーやトイレットペーパーを生産する。海外関連では事業の複合化を進め、衛生用紙のラインアップを拡充する。コスト構造変化への対応と循環型社会への取り組みとして、板紙への難処理古紙配合率を３０年度に３０％とする目標を掲げた。第４次計画最終の２３年度連結決算で売上高７２００億円、営業利益５１０億円を目標とする一方、原燃料価格高騰が収益を圧迫し、連結営業利益は２１年度の３７６億円から２２年度は２５０億円に減益となる見通しを示した。
@@ -101,7 +103,7 @@ def summarize(llm, docs):
             title=docs[0]["title"]
         )
         response = chain({"input_documents": [document]}, return_only_outputs=True)
-
+        
     return response['output_text'], cb.total_cost
 
 def main():
@@ -119,24 +121,7 @@ def main():
     if text_input and run_button:
         document = [{"content": text_input, "title": "User Input"}]
 
-    # ユーザーの入力を監視
-    if user_input := st.chat_input("要約したい文章を入力してね！"):
-        st.session_state.messages.append(HumanMessage(content=user_input))
         with st.spinner("ChatGPT is typing ..."):
-            response = llm(st.session_state.messages)
-        st.session_state.messages.append(AIMessage(content=response.content))
-
-    # チャット履歴の表示
-    messages = st.session_state.get('messages', [])
-    for message in messages:
-        if isinstance(message, AIMessage):
-            with st.chat_message('assistant'):
-                st.markdown(message.content)
-        elif isinstance(message, HumanMessage):
-            with st.chat_message('user'):
-                st.markdown(message.content)
-        else:  # isinstance(message, SystemMessage):
-            st.write(f"System message: {message.content}")
             output_text, cost = summarize(llm, document)
         st.session_state.costs.append(cost)
     else:
@@ -149,7 +134,7 @@ def main():
             st.markdown("---")
             st.markdown("## Original Text")
             st.write("User Input")
-
+    
     costs = st.session_state.get('costs', [])
     st.sidebar.markdown("## Costs")
     st.sidebar.markdown(f"**Total cost: ${sum(costs):.5f}**")
