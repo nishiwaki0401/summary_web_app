@@ -15,9 +15,9 @@ from langchain.schema import (
 
 # OpenAI APIキーを設定
 os.environ["OPENAI_API_KEY"] = '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'
+
 def main():
     llm = ChatOpenAI(temperature=0)
-
 
 def init_page():
     st.set_page_config(
@@ -160,4 +160,5 @@ def main():
         st.sidebar.markdown(f"- ${cost:.5f}")
 
 if __name__ == '__main__':
+    main()
     main()
