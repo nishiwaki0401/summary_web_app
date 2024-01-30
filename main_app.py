@@ -13,8 +13,8 @@ from langchain.schema import (
     AIMessage
 )
 
-# OpenAI APIキーを設定
-os.environ["OPENAI_API_KEY"] = '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'
+# # OpenAI APIキーを設定
+# os.environ["OPENAI_API_KEY"] = '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'
 
 def init_page():
     st.set_page_config(
