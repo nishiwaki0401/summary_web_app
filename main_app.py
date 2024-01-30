@@ -105,6 +105,7 @@ def summarize(llm, docs):
         
     return response['output_text'], cb.total_cost
 
+# main 関数内
 def main():
     init_page()
     llm = select_model()
@@ -146,3 +147,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
