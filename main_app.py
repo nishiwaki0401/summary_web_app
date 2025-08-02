@@ -14,7 +14,7 @@ from langchain.schema import (
 )
 
 # # OpenAI APIキーを設定
-# os.environ["OPENAI_API_KEY"] = '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'
+# os.environ["OPENAI_API_KEY"] = '#################'
 
 def init_page():
     st.set_page_config(
